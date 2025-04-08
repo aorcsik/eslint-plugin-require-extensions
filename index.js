@@ -25,7 +25,7 @@ Object.assign(requireExtensions.rules, {
             let fix;
             if (!node.source.value.includes('?')) {
                 fix = (fixer) => {
-                    return fixer.replaceText(node.source, `'${node.source.value}.js'`);
+                    return fixer.replaceText(node.source, `'${node.source.value.replace(/(\.|\.j)$/, '')}.js'`);
                 };
             }
 
