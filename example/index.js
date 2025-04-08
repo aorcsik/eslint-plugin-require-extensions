@@ -2,6 +2,8 @@ import 'foo';
 import './foo.js';
 import './foo.json';
 import json from './foo.json?raw';
+import './bar/index.js';
+
 // eslint-disable-next-line require-extensions/require-extensions
 import queryNoExt from './foo?raw';
 // eslint-disable-next-line require-extensions/require-extensions

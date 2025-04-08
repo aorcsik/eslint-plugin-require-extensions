@@ -4,8 +4,9 @@
     "author": "Solana Maintainers <maintainers@solana.foundation>",
     "repository": "https://github.com/solana-labs/eslint-plugin-require-extensions",
     "license": "Apache-2.0",
-    "type": "commonjs",
+    "type": "module",
     "scripts": {
+        "fmt": "prettier --write '{*,**/*}.{ts,tsx,js,jsx,json}'",
         "test": "eslint . --report-unused-disable-directives"
     },
     "engines": {
@@ -20,10 +21,6 @@
         "LICENSE",
         "README.md"
     ],
-    "scripts": {
-        "fmt": "prettier --write '{*,**/*}.{ts,tsx,js,jsx,json}'",
-        "test": "eslint . --report-unused-disable-directives"
-    },
     "publishConfig": {
         "access": "public"
     },
@@ -31,7 +28,7 @@
         "eslint": "*"
     },
     "devDependencies": {
-        "eslint": "^8.23.0",
-        "prettier": "^2.8.6"
+        "eslint": "^9.24.0",
+        "prettier": "^3.5.3"
     }
 }

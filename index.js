@@ -1,46 +1,53 @@
-const { existsSync, lstatSync } = require('fs');
-const { dirname, resolve } = require('path');
+import { existsSync, lstatSync } from 'fs';
+import { dirname, resolve } from 'path';
 
-module.exports = {
-    configs: {
-        recommended: {
-            plugins: ['require-extensions'],
-            rules: {
-                'require-extensions/require-extensions': 'error',
-                'require-extensions/require-index': 'error',
-            },
+const requireExtensions = {
+	configs: {},
+	rules: {},
+	processors: {},
+};
+
+Object.assign(requireExtensions.configs, {
+    recommended: {
+        plugins: {
+            'require-extensions': requireExtensions,
+        },
+        rules: {
+            'require-extensions/require-extensions': 'error',
+            'require-extensions/require-index': 'error',
         },
     },
-    rules: {
-        'require-extensions': rule((context, node, path) => {
-            if (!existsSync(path)) {
-                let fix;
-                if (!node.source.value.includes('?')) {
-                    fix = (fixer) => {
-                        return fixer.replaceText(node.source, `'${node.source.value}.js'`);
-                    };
-                }
+});
 
-                context.report({
-                    node,
-                    message: 'Relative imports and exports must end with .js',
-                    fix,
-                });
+Object.assign(requireExtensions.rules, {
+    'require-extensions': rule((context, node, path) => {
+        if (!existsSync(path)) {
+            let fix;
+            if (!node.source.value.includes('?')) {
+                fix = (fixer) => {
+                    return fixer.replaceText(node.source, `'${node.source.value}.js'`);
+                };
             }
-        }),
-        'require-index': rule((context, node, path) => {
-            if (existsSync(path) && lstatSync(path).isDirectory()) {
-                context.report({
-                    node,
-                    message: 'Directory paths must end with index.js',
-                    fix(fixer) {
-                        return fixer.replaceText(node.source, `'${node.source.value}/index.js'`);
-                    },
-                });
-            }
-        }),
-    },
-};
+
+            context.report({
+                node,
+                message: 'Relative imports and exports must end with .js',
+                fix,
+            });
+        }
+    }),
+    'require-index': rule((context, node, path) => {
+        if (existsSync(path) && lstatSync(path).isDirectory()) {
+            context.report({
+                node,
+                message: 'Directory paths must end with index.js',
+                fix(fixer) {
+                    return fixer.replaceText(node.source, `'${node.source.value}/index.js'`);
+                },
+            });
+        }
+    }),
+});
 
 function rule(check) {
     return {
@@ -67,3 +74,5 @@ function rule(check) {
         },
     };
 }
+
+export default requireExtensions;
