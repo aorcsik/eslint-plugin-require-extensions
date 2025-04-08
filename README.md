@@ -12,13 +12,10 @@ npm install --save-dev eslint-plugin-require-extensions
 ```
 
 2. Edit `.eslintrc`
-```json
+```js
 {
     "extends": [
-        "plugin:require-extensions/recommended"
-    ],
-    "plugins": [
-        "require-extensions"
+        requireExtensions.configs.recommended,
     ]
 }
 ```
