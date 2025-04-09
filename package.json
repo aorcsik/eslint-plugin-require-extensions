@@ -10,11 +10,11 @@
         "test": "eslint . --report-unused-disable-directives"
     },
     "engines": {
-        "node": ">=16"
+        "node": ">=18"
     },
     "main": "./index.js",
     "exports": {
-        "require": "./index.js"
+        "import": "./index.js"
     },
     "files": [
         "index.js",
